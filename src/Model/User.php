@@ -1,9 +1,20 @@
 <?php
 
 namespace Src\Model;
-use Src\Model\Model;
-class User extends Model
+use Src\Database\Database;
+class User
 {
-    private $table = 'Users';
+    private static $table = 'Users';
+    private static $db;
+
+    public function __construct()
+    {
+        self::$db = new Database(self::$table);
+    }
+
+    public static function all()
+    {
+        return self::$db->all();
+    }
 
 }

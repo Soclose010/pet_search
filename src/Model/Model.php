@@ -2,21 +2,20 @@
 
 namespace Src\Model;
 use Src\Database\Connect;
-class Model implements ModelInterface
+use PDO;
+abstract class Model implements ModelInterface
 {
-    private $db;
-    public function __construct()
+    protected static $db;
+    protected $table;
+    function __construct()
     {
-        $this->db = Connect::connect();
+        self::$db = Connect::connect();
     }
 
-    public function all($table): array
+    public static function all($table)
     {
-        $sql = "select * from :table";
-        $query = $this->db->prepare($sql);
-        $query->bindValue(':table', $table);
-        $query->execute();
-        return $query->fetchAll();
+        $sql = "select * from " . $table;
+        $query = self::$db->query($sql);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }

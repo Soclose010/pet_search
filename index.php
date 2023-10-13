@@ -2,9 +2,8 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Src\Model\Model;
-$u = new Model();
-print_r($u->all('Users'));
+use Src\Model\User;
+dd(User::all());
 
 ?>
 <!doctype html>

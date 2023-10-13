@@ -11,5 +11,7 @@
             "email": "pirogov1923@mail.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "larapack/dd": "^1.1"
+    }
 }
