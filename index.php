@@ -2,15 +2,15 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Src\Model\User;
-$user = new User();
+use Src\Model\Pet;
+$pet = new Pet();
 //dd($user->where('name','123', 'like'));
 //dd($user->create(['123', '432', '55535535', 'pass']));
 //dd($user->update(1,['123', '432', '555352535', 'pass']));
 //dd($user->delete(3));
 
-dd($user->where('name', '123', 'like')->get());
-
+//dd($user->where('name', '123', 'like')->get());
+//dd($pet->allWithUser())
 ?>
 <!doctype html>
 <html lang="ru">
@@ -40,13 +40,19 @@ dd($user->where('name', '123', 'like')->get());
 </form>
 
 <div>
-    <div>
-        <h3>Имя</h3>
-        <p>Порода</p>
-        <img src="https://media.istockphoto.com/id/1470130937/photo/young-plants-growing-in-a-crack-on-a-concrete-footpath-conquering-adversity-concept.webp?b=1&s=170667a&w=0&k=20&c=IRaA17rmaWOJkmjU_KD29jZo4E6ZtG0niRpIXQN17fc=" alt="" width="100px" height="100px">
-        <p>Хозяин</p>
-    </div>
-
+    <?php
+        $pets = $pet->allWithUser();
+        foreach ($pets as $item) {
+            ?>
+            <div>
+                <h3><?= $item['name'][0]?></h3>
+                <p><?= $item['breed']?></p>
+                <img src=<?= $item['photo']?> alt="" width="100px" height="100px">
+                <p><?= $item['name'][1]?></p>
+            </div>
+    <?php
+        }
+    ?>
 </div>
 </body>
 </html>

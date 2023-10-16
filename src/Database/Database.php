@@ -77,6 +77,14 @@ class Database
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    protected function leftJoin(string $table, string $key, string $foreign_key)
+    {
+        $sql = "select * from {$this->table} left join {$table} on {$key} = {$foreign_key}";
+        $res = $this->db->prepare($sql);
+        $res->execute();
+        return $res->fetchAll(PDO::FETCH_NAMED);
+    }
+
     private function clear(): void
     {
         $this->whereParams= [];
