@@ -78,4 +78,16 @@ class Validator
             return self::REQUIRED;
         }
     }
+    public static function number($data): bool|int
+    {
+        if (is_int($data))
+        {
+            return true;
+        }
+        else
+        {
+            return self::STRING;
+        }
+    }
+
 }

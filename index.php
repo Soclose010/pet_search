@@ -23,7 +23,7 @@ $pet = new Pet();
 </head>
 <body>
 <h1>Сайт по поиску питомцев</h1>
-<form action="">
+<form method="post" action="">
     <h2>Войти в аккаунт</h2>
     <input type="text" placeholder="Телефон">
     <input type="text" placeholder="Пароль">
@@ -32,11 +32,12 @@ $pet = new Pet();
 </form>
 <br>
 <br>
-<form action="">
-    <input type="text" placeholder="Имя">
-    <input type="text" placeholder="Фамилия">
-    <input type="text" placeholder="Телефон">
+<form method ="get" action="src/FilterPets.php">
+    <input type="text" placeholder="Имя" name="name">
+    <input type="text" placeholder="Фамилия" name="surname">
+    <input type="text" placeholder="Телефон" name="phone">
     <input type="submit">
+    <a href="index.php">Показать всех</a>
 </form>
 
 <div>

@@ -9,19 +9,25 @@ class Database
     private PDO $db;
     private string $table;
     private array $fillable;
-    private array $whereParams;
+    private array $whereParams = [];
     private string $whereSql;
+
+    private string $sql;
     public function __construct(string $table, array $fillable)
     {
         $this->db = Connect::connect();
         $this->table = $table;
         $this->fillable = $fillable;
-        $this->whereSql = "select * from {$this->table} where ";
     }
 
     public function all(): bool|array
     {
         return $this->db->query("select * from " . $this->table)->fetchAll(PDO::FETCH_ASSOC);
+    }
+    protected function allQuery(): Database
+    {
+        $this->sql ="select * from {$this->table}";
+        return $this;
     }
 
     public function create(array $params): bool
@@ -66,23 +72,38 @@ class Database
         return $this;
     }
 
-    public function get(): bool|array
+    public function get($fetch_type = PDO::FETCH_ASSOC): bool|array
     {
-        $this->whereSql.= implode(" AND ", $this->createWhereParamsArray());
-        $res = $this->db->prepare($this->whereSql);
-        foreach ($this->whereParams as $whereParam) {
-            $res->bindValue($whereParam[0], $whereParam[1]);
+        if (count($this->whereParams) != 0) {
+
+            $this->whereSql = implode(" AND ", $this->createWhereParamsArray());
+            $this->sql .= " where {$this->whereSql}";
+            $res = $this->db->prepare($this->sql);
+            foreach ($this->whereParams as $whereParam) {
+                if ($whereParam[2] === 'like')
+                {
+                    $val = $whereParam[1] ."%";
+                    dd($val);
+                    $res->bindParam($whereParam[0], $val, PDO::PARAM_STR);
+                }
+                else
+                {
+                    $res->bindValue($whereParam[0], $whereParam[1]);
+                }
+            }
+        } else
+        {
+            $res = $this->db->prepare($this->sql);
         }
         $res->execute();
-        return $res->fetchAll(PDO::FETCH_ASSOC);
+        $this->clear();
+        return $res->fetchAll($fetch_type);
     }
 
-    protected function leftJoin(string $table, string $key, string $foreign_key)
+    protected function leftJoin(string $table, string $key, string $foreign_key) : Database
     {
-        $sql = "select * from {$this->table} left join {$table} on {$key} = {$foreign_key}";
-        $res = $this->db->prepare($sql);
-        $res->execute();
-        return $res->fetchAll(PDO::FETCH_NAMED);
+        $this->sql .= " left join {$table} on {$key} = {$foreign_key}";
+        return $this;
     }
 
     private function clear(): void
@@ -94,7 +115,7 @@ class Database
     {
         $res = [];
         foreach ($this->whereParams as $whereParam) {
-            $res[] = "{$whereParam[0]} {$whereParam[2]} :{$whereParam[0]}";
+                $res[] = "{$whereParam[0]} {$whereParam[2]} :{$whereParam[0]}";
         }
         return $res;
     }
