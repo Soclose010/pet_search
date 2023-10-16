@@ -7,7 +7,10 @@ $user = new User();
 //dd($user->where('name','123', 'like'));
 //dd($user->create(['123', '432', '55535535', 'pass']));
 //dd($user->update(1,['123', '432', '555352535', 'pass']));
-dd($user->delete(3));
+//dd($user->delete(3));
+
+dd($user->where('name', '123', 'like')->get());
+
 ?>
 <!doctype html>
 <html lang="ru">
