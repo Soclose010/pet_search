@@ -3,8 +3,11 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Src\Model\User;
-dd(User::all());
-
+$user = new User();
+//dd($user->where('name','123', 'like'));
+//dd($user->create(['123', '432', '55535535', 'pass']));
+//dd($user->update(1,['123', '432', '555352535', 'pass']));
+dd($user->delete(3));
 ?>
 <!doctype html>
 <html lang="ru">
@@ -22,7 +25,7 @@ dd(User::all());
     <input type="text" placeholder="Телефон">
     <input type="text" placeholder="Пароль">
     <input type="submit">
-    <a href="">Зарегестрироваться</a>
+    <a href="">Зарегистрироваться</a>
 </form>
 <br>
 <br>

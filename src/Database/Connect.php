@@ -15,6 +15,5 @@ class Connect
             echo "подключение не выполнено: " . $e->getMessage();
         }
 
-
     }
 }

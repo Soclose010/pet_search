@@ -2,19 +2,13 @@
 
 namespace Src\Model;
 use Src\Database\Database;
-class User
+class User extends Database
 {
-    private static $table = 'Users';
-    private static $db;
-
+    private string $table = 'Users';
+    private array $fillable = ['name', 'surname', 'phone', 'password'];
     public function __construct()
     {
-        self::$db = new Database(self::$table);
-    }
-
-    public static function all()
-    {
-        return self::$db->all();
+        parent::__construct($this->table, $this->fillable);
     }
 
 }
