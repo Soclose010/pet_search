@@ -3,6 +3,8 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Src\Model\Pet;
+
+session_start();
 $pet = new Pet();
 //dd($user->where('name','123', 'like'));
 //dd($user->create(['123', '432', '55535535', 'pass']));
@@ -34,15 +36,21 @@ $pet = new Pet();
 <br>
 <form method ="get" action="src/FilterPets.php">
     <input type="text" placeholder="Имя" name="name">
-    <input type="text" placeholder="Фамилия" name="surname">
-    <input type="text" placeholder="Телефон" name="phone">
+    <input type="text" placeholder="Порода" name="breed">
     <input type="submit">
-    <a href="index.php">Показать всех</a>
+    <a href="src/FilterPets.php">Показать всех</a>
 </form>
 
 <div>
     <?php
-        $pets = $pet->allWithUser();
+        if (isset($_SESSION['filtered']))
+        {
+            $pets = $_SESSION['filtered'];
+        }
+        else
+        {
+            $pets = $pet->allWithUser();
+        }
         foreach ($pets as $item) {
             ?>
             <div>

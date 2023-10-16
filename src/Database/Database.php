@@ -82,9 +82,7 @@ class Database
             foreach ($this->whereParams as $whereParam) {
                 if ($whereParam[2] === 'like')
                 {
-                    $val = $whereParam[1] ."%";
-                    dd($val);
-                    $res->bindParam($whereParam[0], $val, PDO::PARAM_STR);
+                    $res->bindValue($whereParam[0], "%" . $whereParam[1] ."%");
                 }
                 else
                 {
@@ -115,7 +113,7 @@ class Database
     {
         $res = [];
         foreach ($this->whereParams as $whereParam) {
-                $res[] = "{$whereParam[0]} {$whereParam[2]} :{$whereParam[0]}";
+            $res[] = "{$this->table}.{$whereParam[0]} {$whereParam[2]} :{$whereParam[0]}";
         }
         return $res;
     }
