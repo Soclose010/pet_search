@@ -25,10 +25,10 @@ $pet = new Pet();
 </head>
 <body>
 <h1>Сайт по поиску питомцев</h1>
-<form method="post" action="">
+<form method="post" action="src/Login.php">
     <h2>Войти в аккаунт</h2>
-    <input type="text" placeholder="Телефон">
-    <input type="text" placeholder="Пароль">
+    <input type="text" placeholder="Телефон" name="phone">
+    <input type="text" placeholder="Пароль" name="password">
     <input type="submit">
     <a href="">Зарегистрироваться</a>
 </form>
@@ -38,7 +38,7 @@ $pet = new Pet();
     <input type="text" placeholder="Имя" name="name">
     <input type="text" placeholder="Порода" name="breed">
     <input type="submit">
-    <a href="src/FilterPets.php">Показать всех</a>
+    <a href="index.php">Показать всех</a>
 </form>
 
 <div>
@@ -57,7 +57,7 @@ $pet = new Pet();
                 <h3><?= $item['name'][0]?></h3>
                 <p><?= $item['breed']?></p>
                 <img src=<?= $item['photo']?> alt="" width="100px" height="100px">
-                <p><?= $item['name'][1]?></p>
+                <p><?= $item['name'][1] . " " . $item['phone']?></p>
             </div>
     <?php
         }

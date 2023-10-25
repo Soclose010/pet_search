@@ -24,7 +24,7 @@ class Database
     {
         return $this->db->query("select * from " . $this->table)->fetchAll(PDO::FETCH_ASSOC);
     }
-    protected function allQuery(): Database
+    public function allQuery(): Database
     {
         $this->sql ="select * from {$this->table}";
         return $this;

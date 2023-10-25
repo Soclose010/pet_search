@@ -6,88 +6,98 @@ class Validator
 {
 
     private const STRING = 'Поле должно быть строкой';
+    private const NUMBER = 'Поле должно быть числом';
     private const REQUIRED='Поле обязательно для заполнения';
     private const LENGTH = 'В поле должно быть не менее';
-    public static function validate (mixed $data, array $params) : mixed
+    private const LETTER = 'В поле должно быть не менее 1 прописной буквы';
+    private const CAP_LETTER = 'В поле должно быть не менее 1 заглавной буквы';
+    private const HAS_NUMBER = 'В поле должно быть не менее 1 цифры';
+    private const AT_LEAST_ONE = 'Хотя бы 1 поле должно быть заполнено';
+    public static function validate (array $data, array $rules) : array
     {
         $res = [];
-        foreach ($params as $param)
+        $errors = [];
+        foreach ($data as $key => $value)
         {
-            if (strpos($param, ":"))
+            foreach ($rules[$key] as $param)
             {
-                $val = explode(':', $param);
-                $method = $val[0];
-                $result = self::$method($data, $val[1]);
+                if (strpos($param, ":"))
+                {
+                    $val = explode(':', $param);
+                    $method = $val[0];
+                    $result = self::$method($value, $val[1]);
+                }
+                else
+                {
+                    $result = self::$param($value);
+                }
                 if($result !== true)
                 {
-                    $res[] = $result;
+                    $errors[] = $result;
                 }
             }
-            else
+            if ($errors != [])
             {
-                $result = self::$param($data);
-                if($result !== true)
-                {
-                    $res[] = $result;
-                }
+                $res[$key] = $errors;
             }
+            $errors = [];
         }
-        if (count($res) == 0 )
-        {
-            return $data;
-        }
-        else
+
+        if (count($res) != 0 )
         {
             return $res;
         }
-
-    }
-    public static function length($data, $len): bool|string
-    {
-        if (strlen($data) == $len)
-        {
-            return true;
-        }
         else
         {
-            return self::LENGTH . ' ' . $len . ' символов';
+            return [];
         }
-
     }
 
-    public static function string($data): bool|string
+    public static function atLeastOne(array $data) : bool|string
     {
-        if (is_string($data))
+        foreach ($data[0] as $item)
         {
-            return true;
+            if ($item != '')
+            {
+                return true;
+            }
         }
-        else
-        {
-            return self::STRING;
-        }
+        return self::AT_LEAST_ONE;
+    }
+    private static function length($data, $len): bool|string
+    {
+        return strlen($data) == $len ? true : self::LENGTH . ' ' . $len . ' символов';
+
     }
 
-    public static function required($data): bool|string
+    private static function string($data): bool|string
     {
-        if ($data != '')
-        {
-            return true;
-        }
-        else
-        {
-            return self::REQUIRED;
-        }
-    }
-    public static function number($data): bool|int
-    {
-        if (is_int($data))
-        {
-            return true;
-        }
-        else
-        {
-            return self::STRING;
-        }
+        return is_string($data) ? true : self::STRING;
     }
 
+    private static function required($data): bool|string
+    {
+        return $data != '' ? true : self::REQUIRED;
+    }
+    private static function number($data): bool|string
+    {
+        return is_int($data) ? true : self::NUMBER;
+    }
+
+    private static function letter($data):  bool|string
+    {
+
+        preg_match('/[a-z]+/', $data, $matches);
+        return $matches != [] ? true : self::LETTER;
+    }
+    private static function capLetter($data):  bool|string
+    {
+        preg_match('/[A-Z]+/', $data, $matches);
+        return $matches != [] ? true : self::CAP_LETTER;
+    }
+    private static function hasNumber($data): bool|string
+    {
+        preg_match('/\d+/', $data, $matches);
+        return $matches != [] ? true : self::HAS_NUMBER;
+    }
 }
