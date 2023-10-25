@@ -36,8 +36,8 @@ class Database
         $paramsString = implode(', :',$this->fillable);
         $sql = "insert into {$this->table} ({$columsString}) values (:$paramsString)";
         $res = $this->db->prepare($sql);
-        foreach ($this->fillable as $key => $item) {
-            $res->bindValue($item, $params[$key]);
+        foreach ($this->fillable as $item) {
+            $res->bindValue($item, $params[$item]);
         }
         return $res->execute();
     }

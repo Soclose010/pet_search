@@ -81,7 +81,7 @@ class Validator
     }
     private static function number($data): bool|string
     {
-        return is_int($data) ? true : self::NUMBER;
+        return is_numeric($data) ? true : self::NUMBER;
     }
 
     private static function letter($data):  bool|string

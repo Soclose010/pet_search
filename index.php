@@ -1,18 +1,9 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
-
 use Src\Model\Pet;
-
-session_start();
 $pet = new Pet();
-//dd($user->where('name','123', 'like'));
-//dd($user->create(['123', '432', '55535535', 'pass']));
-//dd($user->update(1,['123', '432', '555352535', 'pass']));
-//dd($user->delete(3));
-
-//dd($user->where('name', '123', 'like')->get());
-//dd($pet->allWithUser())
+session_start();
 ?>
 <!doctype html>
 <html lang="ru">
@@ -25,23 +16,84 @@ $pet = new Pet();
 </head>
 <body>
 <h1>Сайт по поиску питомцев</h1>
+<?php if(!isset($_SESSION['phone'])) {
+    if (isset($_SESSION['errors']['login']))
+    {
+        foreach ($_SESSION['errors']['login'] as $error)
+        {?>
+            <p> <?= $error[0] ?></p>
+<?php
+        }
+    }
+
+    if (isset($_SESSION['errors']['register']))
+    {
+        foreach ($_SESSION['errors']['register'] as $error)
+        {
+            foreach ($error as $message) {
+            ?>
+            <p> <?= $message ?></p>
+            <?php
+            }
+        }
+    }
+?>
 <form method="post" action="src/Login.php">
     <h2>Войти в аккаунт</h2>
     <input type="text" placeholder="Телефон" name="phone">
     <input type="text" placeholder="Пароль" name="password">
-    <input type="submit">
-    <a href="">Зарегистрироваться</a>
+    <input type="submit" value="Войти">
 </form>
+<form method="post" action="src/Register.php">
+    <h2>Зарегистрироваться</h2>
+    <input type="text" placeholder="Имя" name="name">
+    <input type="text" placeholder="Фамилия" name="surname">
+    <input type="text" placeholder="Телефон" name="phone">
+    <input type="text" placeholder="Пароль" name="password">
+    <input type="submit" value="Зарегистрироваться">
+</form>
+<?php }
+else
+{
+    ?>
+    <h3>Здравствуйте, <?= $_SESSION['name'] ?></h3>
+    <a href="src/Logout.php">Выйти</a>
+    <form method="POST" action="">
+        <fieldset style="width:300px">
+            <legend>Добавить питомца</legend>
+            <input type="text" placeholder="Имя">
+            <input type="text" placeholder="Порода">
+            <input type="file" accept=".jpg, .png" placeholder="Фото">
+            <input type="text" hidden value=<?= $_SESSION['phone']?>>
+            <input type="submit">
+        </fieldset>
+    </form>
+<?php
+}
+?>
 <br>
 <br>
 <form method ="get" action="src/FilterPets.php">
+    <?php
+        if (isset($_SESSION['errors']['filter']))
+        {
+            foreach ($_SESSION['errors']['filter'] as $error)
+            {?>
+                    <p> <?= $error ?></p>
+    <?php
+            }
+        }
+    ?>
     <input type="text" placeholder="Имя" name="name">
     <input type="text" placeholder="Порода" name="breed">
     <input type="submit">
-    <a href="index.php">Показать всех</a>
+    <?php if (isset($_SESSION['filtered'])){ ?>
+    <a href="src/FilterPets.php">Показать всех</a>
+    <?php }?>
 </form>
 
-<div>
+<div style="display: flex; width: 500px; justify-content: space-between">
+    <div>
     <?php
         if (isset($_SESSION['filtered']))
         {
@@ -62,6 +114,11 @@ $pet = new Pet();
     <?php
         }
     ?>
+    </div>
+    <div>
+        <h3>Мои питомцы</h3>
+
+    </div>
 </div>
 </body>
 </html>
