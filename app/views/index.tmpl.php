@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <?php require_once "app/views/templates/head.php"?>
+    <?php require_once VIEWS . "/templates/head.php"?>
     <title>Document</title>
 </head>
 <body>
-<?php require_once "app/views/templates/navbar.php" ?>
+<?php require_once VIEWS . "/templates/navbar.php" ?>
 
 <main class="mt-4">
     <div class="card m-5" style="width: 18rem;">
