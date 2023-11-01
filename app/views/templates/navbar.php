@@ -11,6 +11,9 @@
                     <a class="nav-link" aria-current="page" href="/">Главная</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/pets/create">Добавить питомца</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/register">Зарегистрироваться</a>
                 </li>
                 <li class="nav-item">

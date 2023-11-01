@@ -1,6 +1,6 @@
 <?php
 define("ROOT", dirname(__DIR__));
-define("PUBLIC", ROOT . "/public");
+define("WWW", ROOT . "/public");
 define("APP", ROOT . "/app");
 define("CONFIG", ROOT . "/config");
 define("VIEWS", APP . "/views");

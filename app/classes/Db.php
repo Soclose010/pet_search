@@ -24,10 +24,21 @@ class Db
         return $this;
     }
 
-    public function rawSql(string $query, array $params = []): bool|array
+    public function rawSql(string $query, array $params = []): bool|static
     {
-        $this->stmt = $this->connect->prepare($query);
-        $this->stmt->execute($params);
+        try {
+            $this->stmt = $this->connect->prepare($query);
+            $this->stmt->execute($params);
+        }
+        catch (PDOException)
+        {
+            return false;
+        }
+        return $this;
+    }
+
+    public function findAll(): bool|array
+    {
         return $this->stmt->fetchAll();
     }
 
