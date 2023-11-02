@@ -1,5 +1,6 @@
 <?php
 
+namespace myClss;
 class Validator
 {
     private array $errors = [];

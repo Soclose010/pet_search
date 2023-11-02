@@ -1,5 +1,10 @@
 <?php
 
+namespace myClss;
+
+use PDO;
+use PDOException;
+use PDOStatement;
 class Db
 {
     private PDO $connect;
@@ -29,9 +34,7 @@ class Db
         try {
             $this->stmt = $this->connect->prepare($query);
             $this->stmt->execute($params);
-        }
-        catch (PDOException)
-        {
+        } catch (PDOException) {
             return false;
         }
         return $this;
