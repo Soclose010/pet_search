@@ -56,3 +56,24 @@ function redirect (string $url = '')
     header("Location: {$redirect}");
     die();
 }
+
+function printErrors($errors): void
+{
+    if (is_null($errors))
+        return;
+    $output = include VIEWS . "/templates/validationError.php";
+    foreach ($errors as $error)
+    {
+        echo str_replace(':message:', $error, $output);
+    }
+}
+
+function getAlerts(array $alerts): void
+{
+    foreach ($alerts as $alert) {
+        if (!empty($_SESSION[$alert])) {
+            include VIEWS . "/templates/{$alert}Alert.php";
+            unset($_SESSION[$alert]);
+        }
+    }
+}
