@@ -22,7 +22,7 @@
                 <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Имя" value="<?=old('name')?>">
                 <?php
                     if (isset($validator))
-                     printErrors($validator?->listErrors('name'));
+                     printErrors($validator->listErrors('name'));
                 ?>
             </div>
             <div class="mb-3">
@@ -30,7 +30,7 @@
                 <input type="text" name="breed" class="form-control" id="exampleFormControlInput1" placeholder="Порода" value="<?=old('breed')?>">
                 <?php
                 if (isset($validator))
-                    printErrors($validator?->listErrors('breed'));
+                    printErrors($validator->listErrors('breed'));
                 ?>
             </div>
             <div class="mb-3">
@@ -38,7 +38,7 @@
                 <input type="text" name="photo_path" class="form-control" id="exampleFormControlInput1" placeholder="Фото" value="<?=old('photo_path')?>">
                 <?php
                 if (isset($validator))
-                    printErrors($validator?->listErrors('photo_path'));
+                    printErrors($validator->listErrors('photo_path'));
                 ?>
             </div>
         <input type="submit" class="btn btn-primary">
