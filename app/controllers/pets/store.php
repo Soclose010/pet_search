@@ -4,7 +4,7 @@
 use myClss\Db;
 use myClss\Validator;
 
-
+$db = db();
 $fillable = ['name', 'breed', 'photo_path'];
 $data = load($_POST, $fillable);
 
@@ -27,6 +27,7 @@ if (!$validator->hasErrors()) {
 }
 else
 {
+    $_SESSION['inputs'] = $_POST;
     $_SESSION['errors'] = $validator->getErrors();
-    require_once VIEWS . "/pets/create.tmpl.php";
+    redirect("/pets/create");
 }
