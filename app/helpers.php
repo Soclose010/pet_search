@@ -8,7 +8,7 @@ function dump(mixed $data): void
     echo '</pre>';
 }
 
-function dd(mixed $data): void
+function dd(mixed $data = null): void
 {
     dump($data);
     die();
@@ -33,9 +33,13 @@ function load (array $data, array $fillable): array
     return $res;
 }
 
-function old(string $name): string
+function old(string $name): void
 {
-    return isset($_POST[$name]) ? h($_POST[$name]) : '';
+    if (isset($_SESSION['inputs'][$name]))
+    {
+        echo h($_SESSION['inputs'][$name]);
+        unset($_SESSION['inputs'][$name]);
+    }
 }
 function h (string $str): string
 {
@@ -70,4 +74,9 @@ function getAlerts(array $alerts): void
             unset($_SESSION[$alert]);
         }
     }
+}
+
+function db()
+{
+    return \myClss\App::getContainer()->getService(\myClss\Db::class);
 }
