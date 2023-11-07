@@ -4,7 +4,7 @@ namespace myClss;
 
 class Router
 {
-    public array $routes = [];
+    private array $routes = [];
     private string $uri;
     private string $method;
 
