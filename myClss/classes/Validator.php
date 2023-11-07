@@ -50,12 +50,6 @@ class Validator
         }
     }
 
-    public function listErrors(string $name) : null|array
-    {
-        if (!empty($this->errors[$name]))
-            return $this->errors[$name];
-        return null;
-    }
     private function addError(string $key, string $rule, string $n = null): void
     {
         $this->errors[$key][] = str_replace(":number:", $n, $this->errors_list[$rule]);

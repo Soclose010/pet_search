@@ -44,28 +44,22 @@ function h (string $str): string
 
 function redirect (string $url = '')
 {
-    if ($url == '')
-    {
-        $redirect = HOST;
-    }
-    else
-    {
-        $redirect = $url;
-    }
-
+    $redirect = $url == '' ? HOST : $url;
     header("Location: {$redirect}");
     die();
 }
 
-function printErrors($errors): void
+function printErrors(string $name): void
 {
-    if (is_null($errors))
+    if (empty($_SESSION['errors'][$name]))
         return;
     $output = include VIEWS . "/templates/validationError.php";
-    foreach ($errors as $error)
+    foreach ($_SESSION['errors'][$name] as $error)
     {
         echo str_replace(':message:', $error, $output);
     }
+    unset($_SESSION['errors'][$name]);
+
 }
 
 function getAlerts(array $alerts): void
