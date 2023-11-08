@@ -10,15 +10,24 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/">Главная</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/pets/create">Добавить питомца</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Зарегистрироваться</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Войти</a>
-                </li>
+                <?php if (isset($_SESSION['user'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold" href="/"><?= $_SESSION['user']['name']?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/pets/create">Добавить питомца</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Выйти</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Зарегистрироваться</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Войти</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
