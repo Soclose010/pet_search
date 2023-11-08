@@ -8,6 +8,7 @@
 <?php require_once VIEWS . "/templates/navbar.php" ?>
 
 <main class="mt-4">
+    <?= $pagination->getHtml() ?>
     <?php
     foreach ($pets as $pet) {
         ?>

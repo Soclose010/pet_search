@@ -14,6 +14,12 @@ function dd(mixed $data = null): void
     die();
 }
 
+function dumpArray($data): void
+{
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+}
 function abort(int $error_code = 404): void
 {
     http_response_code($error_code);

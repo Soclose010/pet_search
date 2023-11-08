@@ -29,13 +29,13 @@ class Db
         return $this;
     }
 
-    public function rawSql(string $query, array $params = []): bool|static
+    public function rawSql(string $query, array $params = []): static
     {
         try {
             $this->stmt = $this->connect->prepare($query);
             $this->stmt->execute($params);
         } catch (PDOException) {
-            return false;
+//            abort(500);
         }
         return $this;
     }
@@ -43,6 +43,11 @@ class Db
     public function findAll(): bool|array
     {
         return $this->stmt->fetchAll();
+    }
+
+    public function getColumn()
+    {
+        return $this->stmt->fetchColumn();
     }
 
     private function __clone(): void
