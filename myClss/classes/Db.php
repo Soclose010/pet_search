@@ -45,6 +45,11 @@ class Db
         return $this->stmt->fetchAll();
     }
 
+    public function find(): bool|array
+    {
+        return $this->stmt->fetch();
+    }
+
     public function getColumn()
     {
         return $this->stmt->fetchColumn();
