@@ -11,8 +11,6 @@ $total = $db->rawSql("SELECT count(*) FROM Pets")->getColumn();
 $page = $_GET['page'] ?? 1;
 $pagination = new Pagination($page, $per_page, $total);
 $start = $pagination->getStart();
-$params[] = $start;
-$params[] = $per_page;
 $pets = $db->rawSql("SELECT * FROM Pets LIMIT $start, $per_page")->findAll();
 
 require_once VIEWS . "/index.tmpl.php";

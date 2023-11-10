@@ -13,7 +13,7 @@
 </head>
 <body>
 <?php require_once VIEWS . "/templates/navbar.php" ?>
-<main class="mt-4">
+<main class="mt-4 mx-auto" style="width: 600px;">
     <?php getAlerts(['success'])?>
     <form class="row mx-5" action="/pets" method="post">
             <h3>Добавление питомца</h3>
