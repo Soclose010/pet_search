@@ -35,7 +35,7 @@ class Db
             $this->stmt = $this->connect->prepare($query);
             $this->stmt->execute($params);
         } catch (PDOException) {
-//            abort(500);
+            abort(500);
         }
         return $this;
     }
