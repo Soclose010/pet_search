@@ -7,11 +7,12 @@
 <body>
 <?php require_once VIEWS . "/templates/navbar.php" ?>
 <main class="mt-4 mx-auto" style="width: 600px;">
+    <?php getAlerts(['loginError'])?>
     <form class="row mx-5" action="/login" method="post">
         <h3>Вход</h3>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Телефон</label>
-            <input type="number" name="phone" class="form-control" id="exampleFormControlInput1" placeholder="Телефон" value="<?=old('phone')?>">
+            <input type="tel" pattern="[0-9]{11}" name="phone" class="form-control" id="exampleFormControlInput1" placeholder="Телефон" value="<?=old('phone')?>">
             <?php
             printErrors('phone');
             ?>
