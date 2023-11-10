@@ -10,6 +10,10 @@ class Validator
         'max',
         'string',
         'number',
+        'hasCap',
+        'hasUncap',
+        'hasNum',
+        'unique',
     ];
     private array $errors_list = [
         'required' => 'Поле является обязательным',
@@ -17,6 +21,10 @@ class Validator
         'max' => 'Поле должно быть не более :number: символов',
         'string' => 'Поле должно быть строкой',
         'number' => 'Поле должно быть числом',
+        'hasCap' => 'Поле должно иметь хотя бы 1 заглавную букву',
+        'hasUncap' => 'Поле должно иметь хотя бы 1 строчную букву',
+        'hasNum' => 'Поле должно иметь хотя бы 1 цифру',
+        'unique' => 'Пользователь с таким значением поля уже есть',
     ];
 
     public function validate(array $data, array $rules): static
@@ -41,10 +49,10 @@ class Validator
         }
     }
 
-    private function checkRule(string $key, mixed $data, string $rule, int $n = null): void
+    private function checkRule(string $key, mixed $data, string $rule, $n = null): void
     {
         if (in_array($rule, $this->rules_list)) {
-            if (!$this->$rule($data, $n)) {
+            if (!$this->$rule($key, $data, $n)) {
                 $this->addError($key, $rule, $n);
             }
         }
@@ -65,28 +73,56 @@ class Validator
         return $this->errors;
     }
 
-    private function required($data, $n): bool
+    private function required($key, $data, $n): bool
     {
-        return !empty(trim($data));
+        return !empty($data);
     }
 
-    private function min($data, $n): bool
+    private function min($key, $data, $n): bool
     {
         return mb_strlen($data, 'UTF-8') >= $n;
     }
 
-    private function max($data, $n): bool
+    private function max($key, $data, $n): bool
     {
         return mb_strlen($data, 'UTF-8') <= $n;
     }
 
-    private function number($data, $n): bool
+    private function number($key, $data, $n): bool
     {
         return is_numeric($data);
     }
 
-    private function string($data, $n): bool
+    private function string($key, $data, $n): bool
     {
         return is_string($data);
+    }
+
+    private function hasCap($key, $data, $n): bool
+    {
+        preg_match('/[A-Z]+/', $data, $matches);
+        return $matches != [];
+    }
+
+    private function hasUncap($key, $data, $n): bool
+    {
+        preg_match('/[a-z]+/', $data, $matches);
+        return $matches != [];
+    }
+
+    private function hasNum($key, $data, $n): bool
+    {
+        preg_match('/\d+/', $data, $matches);
+        return $matches != [];
+    }
+
+    private function unique($key, $data, $n): bool
+    {
+        /**
+         * @var Db $db
+         */
+        $db = db();
+        $res = $db->rawSql("SELECT * FROM $n WHERE $key = ?", [$data])->findAll();
+        return $res == [];
     }
 }
