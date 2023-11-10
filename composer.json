@@ -1,7 +1,8 @@
 {
   "autoload": {
     "psr-4": {
-      "myClss\\" : "myClss/classes"
+      "myClss\\" : "myClss/classes",
+      "App\\" : "app"
     }
   }
 }
