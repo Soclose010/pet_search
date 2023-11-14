@@ -19,4 +19,6 @@ $router->post('logout','auth/logout.php')->middleware('auth');
 
 // Pets Pages
 $router->get('pets/create','pets/create.php')->middleware('auth');
+$router->get('pets','pets/index.php')->middleware('auth');
 $router->post('pets','pets/store.php')->middleware('auth');
+$router->post('pets/delete','pets/delete.php')->middleware('auth');

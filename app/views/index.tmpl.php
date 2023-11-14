@@ -15,8 +15,9 @@
         <div class="card m-5" style="width: 18rem;">
             <img src="<?= HOST . $pet['photo_path']?>" class="card-img-top" alt="..." style="width: 40px">
             <div class="card-body">
-                <h5 class="card-title"><?= $pet['name']?></h5>
+                <h5 class="card-title"><?= $pet['name'][0]?></h5>
                 <p class="card-text"><?= $pet['breed']?></p>
+                <p class="card-text"><?= "{$pet['name'][1]} {$pet['surname']} {$pet['phone']}"?></p>
             </div>
         </div>
     <?php

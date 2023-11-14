@@ -40,9 +40,9 @@ class Db
         return $this;
     }
 
-    public function findAll(): bool|array
+    public function findAll($mode = PDO::FETCH_ASSOC): bool|array
     {
-        return $this->stmt->fetchAll();
+        return $this->stmt->fetchAll($mode);
     }
 
     public function find(): bool|array

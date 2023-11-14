@@ -18,6 +18,9 @@
                         <a class="nav-link" aria-current="page" href="/pets/create">Добавить питомца</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/pets">Мои питомцы</a>
+                    </li>
+                    <li class="nav-item">
                         <form action="/logout" method = "post">
                         <button type="submit" class="nav-link">Выйти</button>
                         </form>
