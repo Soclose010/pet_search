@@ -20,6 +20,7 @@ function dumpArray($data): void
     print_r($data);
     echo '</pre>';
 }
+
 function abort(int $error_code = 404): void
 {
     http_response_code($error_code);
@@ -27,12 +28,11 @@ function abort(int $error_code = 404): void
     die();
 }
 
-function load (array $data, array $fillable): array
+function load(array $data, array $fillable): array
 {
     $res = [];
     foreach ($data as $key => $item) {
-        if (in_array($key,$fillable))
-        {
+        if (in_array($key, $fillable)) {
             $res[$key] = trim($item);
         }
     }
@@ -41,18 +41,18 @@ function load (array $data, array $fillable): array
 
 function old(string $name): void
 {
-    if (isset($_SESSION['inputs'][$name]))
-    {
+    if (isset($_SESSION['inputs'][$name])) {
         echo h($_SESSION['inputs'][$name]);
         unset($_SESSION['inputs'][$name]);
     }
 }
-function h (string $str): string
+
+function h(string $str): string
 {
     return htmlspecialchars($str, ENT_QUOTES);
 }
 
-function redirect (string $url = '')
+function redirect(string $url = '')
 {
     $redirect = $url == '' ? HOST : $url;
     header("Location: {$redirect}");
@@ -64,8 +64,7 @@ function printErrors(string $name): void
     if (empty($_SESSION['errors'][$name]))
         return;
     $output = include VIEWS . "/templates/validationError.php";
-    foreach ($_SESSION['errors'][$name] as $error)
-    {
+    foreach ($_SESSION['errors'][$name] as $error) {
         echo str_replace(':message:', $error, $output);
     }
     unset($_SESSION['errors'][$name]);
@@ -81,6 +80,7 @@ function getAlerts(array $alerts): void
         }
     }
 }
+
 function db()
 {
     return \myClss\App::getContainer()->getService(\myClss\Db::class);
@@ -92,9 +92,21 @@ function upload(array $file): string
 
     if (!is_dir($upload))
         mkdir($upload, 0777, true);
-    $ext = pathinfo($file['name'],PATHINFO_EXTENSION);
+    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
     $filename = "pet_" . time() . ".{$ext}";
     if (!move_uploaded_file($file['tmp_name'], $upload . "/" . $filename))
         abort(500);
     return "/public/uploads/{$filename}";
+}
+
+function delete(string $path): void
+{
+    $path = "..{$path}";
+    unlink($path);
+}
+
+function deleteAndUpload(string $path, array $file): string
+{
+    delete($path);
+    return upload($file);
 }
