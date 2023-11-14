@@ -13,11 +13,16 @@ $validator->validate($data, [
 ]);
 if (!$validator->hasErrors())
 {
-    if ($_SESSION['user']['id'] == $db->rawSql("SELECT user_id FROM Pets WHERE id = :id", $data)->getColumn())
+    $pet = $db->rawSql("SELECT user_id, photo_path FROM Pets WHERE id = :id", $data)->find();
+    if ($_SESSION['user']['id'] == $pet['user_id'])
     {
-        $db->rawSql("DELETE FROM Pets WHERE id = :id",$data);
-        $_SESSION['deleteSuccess'] = 'Удалено';
-        redirect('/pets');
+        if($db->rawSql("DELETE FROM Pets WHERE id = :id",$data))
+        {
+            delete($pet['photo_path']);
+            $_SESSION['deleteSuccess'] = 'Удалено';
+            redirect('/pets');
+        }
+
     }
 }
 $_SESSION['deleteError'] = 'Ошибка при удалении';

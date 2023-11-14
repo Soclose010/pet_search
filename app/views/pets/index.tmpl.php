@@ -8,7 +8,7 @@
 <?php require_once VIEWS . "/templates/navbar.php" ?>
 <main class="mt-4 mx-auto gap-3 row row-cols-1" style="width: 600px;">
     <div class="row">
-        <?php getAlerts(['deleteSuccess', 'deleteError'])?>
+        <?php getAlerts(['deleteSuccess', 'deleteError', 'updateError','updateSuccess'])?>
     </div>
     <div class="row justify-content-between">
     <?php foreach ($myPets as $pet):?>
@@ -20,7 +20,7 @@
                     <p class="card-text"><?=$pet['breed']?></p>
                 </div>
                 <div>
-                    <a href="pets/change" class="btn btn-primary">Изменить</a>
+                    <a href="pets/edit?id=<?=$pet['id']?>" class="btn btn-primary">Изменить</a>
                     <form action="pets/delete" method="post" class="d-inline">
                         <input type="hidden" name="id" value="<?=$pet['id']?>">
                         <button type="submit" class="btn btn-danger">Удалить</button>
