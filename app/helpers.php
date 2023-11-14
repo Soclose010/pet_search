@@ -81,8 +81,20 @@ function getAlerts(array $alerts): void
         }
     }
 }
-
 function db()
 {
     return \myClss\App::getContainer()->getService(\myClss\Db::class);
+}
+
+function upload(array $file): string
+{
+    $upload = WWW . '/uploads';
+
+    if (!is_dir($upload))
+        mkdir($upload, 0777, true);
+    $ext = pathinfo($file['name'],PATHINFO_EXTENSION);
+    $filename = "pet_" . time() . ".{$ext}";
+    if (!move_uploaded_file($file['tmp_name'], $upload . "/" . $filename))
+        abort(500);
+    return "/public/uploads/{$filename}";
 }

@@ -13,7 +13,7 @@
     foreach ($pets as $pet) {
         ?>
         <div class="card m-5" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="<?= HOST . $pet['photo_path']?>" class="card-img-top" alt="..." style="width: 40px">
             <div class="card-body">
                 <h5 class="card-title"><?= $pet['name']?></h5>
                 <p class="card-text"><?= $pet['breed']?></p>

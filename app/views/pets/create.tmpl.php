@@ -15,7 +15,7 @@
 <?php require_once VIEWS . "/templates/navbar.php" ?>
 <main class="mt-4 mx-auto" style="width: 600px;">
     <?php getAlerts(['success'])?>
-    <form class="row mx-5" action="/pets" method="post">
+    <form class="row mx-5" action="/pets" method="post" enctype="multipart/form-data">
             <h3>Добавление питомца</h3>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Имя</label>
@@ -33,7 +33,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Фото</label>
-                <input type="text" name="photo_path" class="form-control" id="exampleFormControlInput1" placeholder="Фото" value="<?=old('photo_path')?>">
+                <input type="file" name="photo_path" class="form-control" id="exampleFormControlInput1">
                 <?php
                 printErrors('photo_path');
                 ?>

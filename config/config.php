@@ -6,4 +6,4 @@ define("CONFIG", ROOT . "/config");
 define("VIEWS", APP . "/views");
 define("CONTROLLERS", APP . "/controllers");
 define("ROUTER", APP . "/router");
-define("HOST", "http://pet-search/");
+define("HOST", "http://pet-search");
