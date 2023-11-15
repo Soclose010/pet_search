@@ -25,7 +25,7 @@ if (!$validator->hasErrors()) {
     if (
         $db->rawSql("INSERT INTO Users (`name`, `surname`, `phone`, `password`) VALUES (:name, :surname, :phone, :password)", $data)
     ) {
-        $_SESSION['success'] = "Добавление успешно";
+        $_SESSION['success'] = "Регистрация успешна";
         redirect("/register");
     } else {
         abort(500);

@@ -94,7 +94,7 @@ class Validator
 
     private function number($key, $data, $param): bool
     {
-        return is_numeric($data);
+        return is_numeric($data) || $data == '';
     }
 
     private function string($key, $data, $param): bool
